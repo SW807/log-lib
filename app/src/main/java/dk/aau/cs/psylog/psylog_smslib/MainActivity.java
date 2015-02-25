@@ -15,10 +15,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         SMSReader as = new SMSReader(this);
-        String[] strings = as.readInbox();
-        for(String s : strings){
-            Log.e("NOT SMS",s);
-        }
+        PhoneLogReader.readAllCalls(this);
     }
 
 

@@ -21,31 +21,23 @@ public class SMSReader {
         this.context = context;
     }
 
-    public String[] readInbox(){
+    public Cursor readInbox(){
         return readURI(inboxURI);
     }
 
-    public String[] readDraft(){
+    public Cursor readDraft(){
         return readURI(draftURI);
     }
 
-    public String[] readSent(){
+    public Cursor readSent(){
         return readURI(sentURI);
     }
 
-    private String[] readURI(Uri uri){
+    private Cursor readURI(Uri uri){
         String[] requiredColumns = new String[] {"_id","thread_id","address","person","date","protocol","read","status","type","reply_path_present","subject","body","service_center","locked"};
         ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = contentResolver.query(uri, requiredColumns,null,null,null);
-
-        String[] returnList = new String[cursor.getCount()];
         cursor.moveToFirst();
-        int i = 0;
-        while(cursor.isAfterLast() == false){
-            returnList[i] = cursor.getString(cursor.getColumnIndex("body"));
-            i++;
-            cursor.moveToNext();
-        }
-        return returnList;
+        return cursor;
     }
 }
